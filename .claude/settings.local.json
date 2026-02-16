@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git fetch:*)",
+      "Bash(pwsh -File .specify/scripts/powershell/create-new-feature.ps1 -Json -Number 1 -ShortName \"ai-employee-foundation\" \"A file-system-based AI Employee that monitors an Inbox folder for dropped files, triages and classifies them, creates action plans, manages a HITL approval workflow, updates an Obsidian dashboard, and generates weekly CEO briefings. All AI functionality implemented as Claude Code Agent Skills.\")",
+      "Bash(powershell.exe -File .specify/scripts/powershell/create-new-feature.ps1 -Json -Number 1 -ShortName \"ai-employee-foundation\" \"A file-system-based AI Employee that monitors an Inbox folder for dropped files, triages and classifies them, creates action plans, manages a HITL approval workflow, updates an Obsidian dashboard, and generates weekly CEO briefings. All AI functionality implemented as Claude Code Agent Skills.\")",
+      "Bash(powershell.exe -File .specify/scripts/powershell/setup-plan.ps1 -Json)",
+      "Bash(powershell.exe -File .specify/scripts/powershell/update-agent-context.ps1 -AgentType claude)",
+      "Bash(powershell.exe -File .specify/scripts/powershell/check-prerequisites.ps1 -Json)",
+      "Bash(powershell.exe -File .specify/scripts/powershell/check-prerequisites.ps1 -Json -RequireTasks -IncludeTasks)",
+      "Bash(uv init:*)",
+      "Bash(uv add:*)",
+      "Bash(bash .specify/scripts/bash/create-phr.sh --title \"phase-1-setup-implementation\" --stage green --feature 001-ai-employee-foundation --json)",
+      "Bash(uv run:*)",
+      "Bash(claude:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+INVOICE #2026-0142
+
+From: Acme Web Development LLC
+To: Client Alpha Corp
+Date: February 10, 2026
+
+Description: Website redesign project - Phase 2 milestone
+  - Frontend implementation (40 hours @ $150/hr): $6,000
+  - Backend API development (20 hours @ $150/hr): $3,000
+  - Testing and QA (10 hours @ $100/hr): $1,000
+
+Subtotal: $10,000
+Tax (0%): $0
+Total Due: $10,000
+
+Payment Terms: Net 30
+Due Date: March 12, 2026
+
+Bank Details: [See separate secure channel]
