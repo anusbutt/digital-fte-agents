@@ -1,0 +1,10 @@
+[project]
+name = "bronze"
+version = "0.1.0"
+description = "Bronze Tier AI Employee - File-system-based Digital FTE with Obsidian dashboard"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "python-dotenv>=1.2.1",
+    "watchdog>=6.0.0",
+]
