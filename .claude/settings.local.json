@@ -13,7 +13,18 @@
       "Bash(bash .specify/scripts/bash/create-phr.sh --title \"phase-1-setup-implementation\" --stage green --feature 001-ai-employee-foundation --json)",
       "Bash(uv run:*)",
       "Bash(claude:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(gh auth:*)",
+      "Bash(git remote add:*)",
+      "mcp__github__create_pull_request",
+      "Bash(winget install:*)",
+      "Bash(for f in .env.example .python-version pyproject.toml uv.lock main.py CLAUDE.md README.md Dashboard.md Company_Handbook.md Business_Goals.md)",
+      "Bash(do)",
+      "Bash(git mv:*)",
+      "Bash(done)",
+      "Bash(for d in Accounting Approved Briefings Done Inbox Needs_Action Pending_Approval Plans Rejected watchers skills test_data specs history)"
     ]
   }
 }
