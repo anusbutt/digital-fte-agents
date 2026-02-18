@@ -1,174 +1,270 @@
-# AI Employee - Bronze Tier Digital FTE
+# Bronze Tier - Digital FTE (Full-Time Employee)
 
-**Tier**: Bronze | **Hackathon**: Panaversity Hackathon 0 | **Category**: Personal AI Employee
+> **Panaversity Hackathon 0** | Personal AI Employee | Built with Claude Code Agent Skills + Obsidian
 
-A file-system-based AI Employee that monitors an Inbox folder for dropped files, triages and classifies them, creates action plans, manages a Human-in-the-Loop (HITL) approval workflow, updates an Obsidian dashboard, and generates weekly CEO briefings. All AI functionality is implemented as Claude Code Agent Skills.
+An autonomous AI Employee that lives inside your file system. Drop a file, and it thinks, plans, asks for approval when needed, updates your dashboard, and reports back weekly — all without leaving Obsidian.
+
+---
+
+## What It Does
+
+| Capability | How It Works |
+|-----------|--------------|
+| **Inbox Monitoring** | Watches a folder for new files in real-time using Python watchdog |
+| **Smart Triage** | Classifies documents (invoices, receipts, briefs, contracts) by filename patterns |
+| **Action Planning** | Claude AI reads each item + your business rules, then creates step-by-step plans |
+| **Human-in-the-Loop** | Sensitive actions (payments > $500, external emails) require your approval first |
+| **Live Dashboard** | `Dashboard.md` in Obsidian shows real-time counts, recent activity, and alerts |
+| **CEO Briefing** | Weekly summary with revenue tracking, bottleneck analysis, and proactive suggestions |
+| **Full Audit Trail** | Every action logged as a Markdown table — visible directly in Obsidian |
+
+---
 
 ## Architecture
 
 ```
-[File Drop]
-    |
-    v
-filesystem_watcher.py --- Detects new files in /Inbox
-    |                      Creates metadata .md in /Needs_Action
-    v
-orchestrator.py ---------- Detects new .md in /Needs_Action
-    |                      Invokes Claude Code with Agent Skills
-    v
-Claude Code -------------- Reads item + Company_Handbook.md
-    |                      Creates plan in /Plans
-    |                      If sensitive: creates approval in /Pending_Approval
-    |                      Updates Dashboard.md
-    v
-[User reviews in Obsidian]
-    |
-    +-- Moves to /Approved --> orchestrator detects
-    |                         Invokes process-approval skill
-    |                         Logs, moves to /Done
-    |
-    +-- Moves to /Rejected --> orchestrator detects
-                               Logs rejection, moves to /Done
-
-[Manual/Scheduled]
-    |
-    v
-orchestrator.py --briefing --> Generates CEO Briefing in /Briefings
-                               Updates Dashboard.md
+                    +------------------+
+                    |   You drop a     |
+                    |   file into      |
+                    |   /Inbox/        |
+                    +--------+---------+
+                             |
+                             v
+               +---------------------------+
+               |  filesystem_watcher.py    |
+               |  Detects file instantly   |
+               |  Classifies by filename   |
+               |  Creates metadata .md     |
+               +------------+--------------+
+                            |
+                            v
+               +---------------------------+
+               |  orchestrator.py          |
+               |  Picks up from            |
+               |  /Needs_Action/           |
+               |  Invokes Claude Code      |
+               +------------+--------------+
+                            |
+              +-------------+-------------+
+              |                           |
+              v                           v
+   +------------------+       +--------------------+
+   | triage-inbox.md  |       | Sensitive item?    |
+   | Reads handbook   |       | Creates approval   |
+   | Creates plan     |       | in /Pending_       |
+   | Updates dashboard|       | Approval/          |
+   +------------------+       +----------+---------+
+                                         |
+                              +----------+---------+
+                              |                    |
+                              v                    v
+                     +-------------+      +-------------+
+                     | /Approved/  |      | /Rejected/  |
+                     | User drags  |      | User drags  |
+                     | file here   |      | file here   |
+                     +------+------+      +------+------+
+                            |                    |
+                            v                    v
+                     +-----------------------------+
+                     |  process-approval.md        |
+                     |  Logs decision               |
+                     |  Archives to /Done/          |
+                     |  Updates Dashboard.md        |
+                     +-----------------------------+
 ```
+
+---
 
 ## Tech Stack
 
-| Component | Tool | Purpose |
-|-----------|------|---------|
-| Brain | Claude Code CLI | Reasoning engine, executes Agent Skills |
-| Memory/GUI | Obsidian | Dashboard, vault browsing, HITL approval |
-| Watchers | Python + watchdog | File system monitoring |
-| Package Manager | uv | Python dependency management |
-| Skills | Claude Agent Skills (.md) | AI behavior definitions |
+| Layer | Technology | Role |
+|-------|-----------|------|
+| **AI Brain** | [Claude Code CLI](https://claude.ai/code) | Reasoning engine — reads skills, writes plans, updates files |
+| **Dashboard & GUI** | [Obsidian](https://obsidian.md/) (free) | Visual interface — browse vault, approve actions, read briefings |
+| **File Watchers** | Python 3.13 + [watchdog](https://pypi.org/project/watchdog/) | Real-time file system monitoring with polling fallback |
+| **Package Manager** | [uv](https://docs.astral.sh/uv/) | Fast Python dependency management |
+| **Agent Skills** | Markdown files (`.md`) | Self-contained AI behavior definitions — no code, just instructions |
+| **Audit Logging** | Markdown tables + hidden JSON | Human-readable in Obsidian, machine-parseable for briefings |
 
-## Setup
+---
+
+## Quick Start
 
 ### Prerequisites
 
 - Python 3.13+
-- [uv](https://docs.astral.sh/uv/) (Python package manager)
-- [Claude Code CLI](https://claude.ai/code) (`claude --version` works)
+- [uv](https://docs.astral.sh/uv/) — `pip install uv` or see docs
+- [Claude Code CLI](https://claude.ai/code) — `claude --version` should work
 - [Obsidian](https://obsidian.md/) v1.10.6+ (free)
 
 ### Installation
 
 ```bash
-# 1. Clone and install dependencies
-cd bronze
+# Clone the repo
+git clone https://github.com/anusbutt/digital-fte-agents.git
+cd digital-fte-agents/bronze
+
+# Install Python dependencies
 uv sync
 
-# 2. Create environment file
+# Create your environment file
 cp .env.example .env
-# Edit .env -- DRY_RUN=true by default (safe mode)
-
-# 3. Open Obsidian vault
-# Open Obsidian -> "Open folder as vault" -> select bronze/
+# DRY_RUN=true by default (safe mode — logs only, no Claude invocation)
 ```
 
-### Running
+### Open the Vault
+
+1. Launch **Obsidian**
+2. Click **"Open folder as vault"**
+3. Select the `bronze/` folder
+4. You'll see `Dashboard.md` — your command center
+
+### Run the System
+
+Open **3 separate terminals**, all in the `bronze/` directory:
 
 ```bash
-# Terminal 1: Start file system watcher
+# Terminal 1: File watcher (monitors Inbox/)
 uv run python -c "from watchers.filesystem_watcher import main; main()"
 
-# Terminal 2: Start orchestrator
+# Terminal 2: Orchestrator (triggers Claude for processing)
 uv run python -c "from watchers.orchestrator import main; main()"
 
-# One-time: Generate CEO briefing
+# Terminal 3: Drop test files
+copy test_data\sample_invoice.txt Inbox\
+copy test_data\sample_receipt.txt Inbox\
+```
+
+### Generate a CEO Briefing
+
+```bash
 uv run python -c "import sys; sys.argv=['o','--briefing']; from watchers.orchestrator import main; main()"
 ```
 
-### Testing with DRY_RUN
+---
 
-With `DRY_RUN=true` (default), the system:
-- Detects and classifies files normally
-- Logs what Claude *would* do, but doesn't invoke Claude
-- Produces audit log entries for every action
+## How DRY_RUN Works
 
-Set `DRY_RUN=false` in `.env` to enable live Claude Code invocation.
+| Mode | Behavior |
+|------|----------|
+| `DRY_RUN=true` (default) | Files are detected and classified normally. Logs what Claude *would* do. No Claude invocation. Safe for testing. |
+| `DRY_RUN=false` | Full pipeline — Claude reads files, creates plans, updates dashboard, generates briefings. |
 
-## Demo Walkthrough
+Edit `.env` to switch modes. Always start with `true` to verify your setup.
 
-1. **Open Obsidian** -- see `Dashboard.md` (clean state)
-2. **Show `Company_Handbook.md`** -- the business rules the AI follows
-3. **Drop test files into `/Inbox/`**:
-   ```bash
-   cp test_data/sample_invoice.txt Inbox/
-   cp test_data/sample_receipt.txt Inbox/
-   cp test_data/sample_brief.txt Inbox/
-   ```
-4. **Watch the watcher** -- metadata `.md` files appear in `/Needs_Action/`
-5. **Orchestrator processes** -- plans created in `/Plans/`, dashboard updated
-6. **HITL approval** -- sensitive item creates approval file in `/Pending_Approval/`
-   - Drag to `/Approved/` to approve
-   - Drag to `/Rejected/` to reject
-7. **Generate briefing** -- run with `--briefing` flag
-8. **Check audit logs** -- structured JSON Lines in `/Logs/`
+---
 
-## Folder Structure
+## Folder Map
 
 ```
 bronze/                          # Obsidian vault root
-├── Dashboard.md                 # Real-time status view
-├── Company_Handbook.md          # Business rules for the AI
-├── Business_Goals.md            # Goals, metrics, thresholds
+│
+├── Dashboard.md                 # Live status — counts, activity feed, alerts
+├── Company_Handbook.md          # Business rules the AI follows
+├── Business_Goals.md            # Revenue targets, metrics, thresholds
 │
 ├── Inbox/                       # Drop files here
-├── Needs_Action/                # Triaged items awaiting processing
-├── Plans/                       # AI-generated action plans
-├── Pending_Approval/            # HITL: awaiting human approval
-├── Approved/                    # User approved
-├── Rejected/                    # User rejected
-├── Done/                        # Completed items
-├── Logs/                        # Audit logs (JSON Lines, daily)
-├── Briefings/                   # Weekly CEO briefings
+├── Needs_Action/                # Watcher puts classified items here
+├── Plans/                       # Claude creates action plans here
+├── Pending_Approval/            # Sensitive items wait for your approval
+├── Approved/                    # Drag here to approve
+├── Rejected/                    # Drag here to reject
+├── Done/                        # Completed items archived here
+├── Logs/                        # Audit trail (Markdown tables, daily)
+├── Briefings/                   # Weekly CEO briefing reports
 ├── Accounting/                  # Financial tracking
 │
-├── watchers/                    # Python watcher scripts
-│   ├── base_watcher.py          # Abstract base class
-│   ├── filesystem_watcher.py    # Watches /Inbox for new files
-│   ├── orchestrator.py          # Triggers Claude Code skills
-│   └── logger.py                # Structured audit logging
+├── watchers/                    # Python backend
+│   ├── base_watcher.py          # Abstract base class (poll + process loop)
+│   ├── filesystem_watcher.py    # Inbox monitor (watchdog + startup scan)
+│   ├── orchestrator.py          # Claude invoker (skills + context assembly)
+│   └── logger.py                # Audit logging (Markdown + hidden JSON)
 │
 ├── skills/                      # Claude Code Agent Skills
 │   ├── triage-inbox.md          # Classify & route inbox items
-│   ├── update-dashboard.md      # Refresh Dashboard.md
-│   ├── generate-briefing.md     # Weekly CEO briefing
-│   └── process-approval.md      # Handle approved/rejected items
+│   ├── update-dashboard.md      # Regenerate Dashboard.md from vault state
+│   ├── generate-briefing.md     # Weekly CEO briefing with revenue analysis
+│   └── process-approval.md      # Handle approved/rejected decisions
 │
 ├── test_data/                   # Sample files for demo
-├── pyproject.toml               # Python project config (uv)
+│   ├── sample_invoice.txt       # $10,000 invoice (triggers approval)
+│   └── sample_receipt.txt       # $49.99 hosting receipt
+│
+├── pyproject.toml               # Python project (uv)
 ├── .env.example                 # Environment template
-└── .gitignore                   # Excludes .env, .obsidian, etc.
+└── .gitignore                   # Excludes .env, .obsidian, Logs/, etc.
 ```
 
-## Security
+---
 
-| Measure | Implementation |
-|---------|---------------|
-| No hardcoded secrets | `.env` for configuration, `.env.example` committed |
-| DRY_RUN default | All actions log-only until explicitly enabled |
-| HITL approval | Sensitive actions require human approval via file movement |
-| Audit logging | Every AI action logged to `/Logs/YYYY-MM-DD.json` (JSON Lines) |
-| .gitignore | `.env`, `.obsidian/`, `Logs/`, `__pycache__/` excluded from version control |
+## Agent Skills — The AI's Playbook
 
-## Agent Skills
+Each skill is a plain Markdown file that tells Claude exactly what to do. No code — just structured instructions that Claude follows step by step.
 
-All AI functionality is defined in `.md` files in `/skills/`. Each skill is:
-- Self-contained with clear instructions
-- References `Company_Handbook.md` for business rules
-- Uses YAML frontmatter schemas from the data model
-- Can be tested independently
+| Skill | When It Fires | What It Does | What It Produces |
+|-------|--------------|--------------|-----------------|
+| `triage-inbox.md` | New item in `/Needs_Action/` | Reads file + Company Handbook, classifies type & priority, determines if approval needed | Action plan in `/Plans/`, approval request if sensitive |
+| `update-dashboard.md` | After every action | Counts all folders, reads logs & goals, regenerates entire dashboard | Fresh `Dashboard.md` with live data |
+| `generate-briefing.md` | `--briefing` flag or scheduled | Analyzes week's work, compares to goals, identifies bottlenecks | Dated briefing in `/Briefings/` |
+| `process-approval.md` | File moved to `/Approved/` or `/Rejected/` | Reads decision, updates plan status, archives files | Logged decision, files moved to `/Done/` |
 
-| Skill | Trigger | Output |
-|-------|---------|--------|
-| triage-inbox.md | New item in /Needs_Action | ActionPlan in /Plans, ApprovalRequest if needed |
-| update-dashboard.md | After any action | Regenerated Dashboard.md |
-| generate-briefing.md | --briefing flag or scheduled | Dated briefing in /Briefings |
-| process-approval.md | File moved to /Approved or /Rejected | Logged decision, files archived to /Done |
+---
+
+## Security & Safety
+
+| Layer | What It Does |
+|-------|-------------|
+| **DRY_RUN Default** | System ships in safe mode — all actions are log-only until you explicitly enable live mode |
+| **Human-in-the-Loop** | Invoices > $500, external emails, deletions, and API calls all require your manual approval in Obsidian |
+| **Audit Logging** | Every single AI action is recorded with timestamp, actor, target, and result — rendered as a readable table in Obsidian |
+| **No Hardcoded Secrets** | All configuration via `.env` (gitignored). Only `.env.example` is committed |
+| **File Preservation** | Original files in `/Inbox/` are never modified or deleted — only copied |
+| **Gitignore** | `.env`, `.obsidian/`, `Logs/`, `__pycache__/`, `.venv/` all excluded from version control |
+
+---
+
+## Demo Walkthrough
+
+> Estimated time: 5-7 minutes
+
+1. **Open Obsidian** — Show `Dashboard.md` in its clean initial state
+2. **Show `Company_Handbook.md`** — The rules your AI follows (classification, approval thresholds, client tiers)
+3. **Drop 3 test files into `/Inbox/`** — Invoice, receipt, and client brief
+4. **Watch Terminal 1** — Watcher detects each file, classifies it, creates metadata
+5. **Watch Terminal 2** — Orchestrator picks up items, invokes Claude skills
+6. **Check Obsidian** — Plans appear in `/Plans/`, Dashboard updates with live counts
+7. **HITL Approval** — $10,000 invoice triggers approval. Drag from `/Pending_Approval/` to `/Approved/`
+8. **Generate CEO Briefing** — Run the briefing command, check `/Briefings/`
+9. **Audit Trail** — Open `Logs/` to see every action recorded as a clean table
+
+---
+
+## Business Rules (Company Handbook)
+
+The AI Employee follows rules defined in `Company_Handbook.md`:
+
+- **File Classification**: Invoice, Receipt, Client Brief, Contract, Unknown
+- **Approval Required For**: Invoices > $500, external emails, social media posts, file deletions, external API calls
+- **Client Priority Tiers**: Tier 1 (same day), Tier 2 (2 business days), Tier 3 (5 business days)
+- **General Rules**: Never auto-execute sensitive actions, always log, preserve original files, respect DRY_RUN
+
+All rules are customizable — edit `Company_Handbook.md` to match your business.
+
+---
+
+## Built With
+
+This project was built entirely through **Spec-Driven Development (SDD)**:
+
+```
+Constitution → Specification → Plan → Tasks → Implementation
+```
+
+- 1 constitution defining project principles
+- 1 feature specification with 5 user stories
+- 1 implementation plan with data model and contracts
+- 34 tasks across 8 phases, all completed
+- 35/35 integration test assertions passing
+- 12 Prompt History Records documenting every step
+
+All SDD artifacts are preserved in `specs/` and `history/` for full traceability.
