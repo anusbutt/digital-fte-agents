@@ -1,0 +1,43 @@
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Obsidian
+.obsidian/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Audit logs (contain runtime data, generated at runtime)
+vault/Logs/
+
+# Node.js/TypeScript (email-mcp server)
+email-mcp/node_modules/
+email-mcp/dist/
+
+# Playwright browser sessions (contain login state)
+playwright-data/
+
+# OAuth2 tokens and credentials (secrets)
+token.json
+token-mcp.json
+credentials.json
+
+# OS
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+
+# IDE
+.vscode/
+.idea/

@@ -1,0 +1,27 @@
+CLIENT BRIEF: Beta Corp Mobile App
+
+Client: Beta Corp (Tier 2 - Project-based)
+Project Manager: Jane Smith
+Date: February 15, 2026
+
+Project Overview:
+Beta Corp needs a mobile app for their field service team. The app should
+allow technicians to log service calls, capture photos, and submit reports
+from the field.
+
+Key Requirements:
+1. Cross-platform (iOS and Android)
+2. Offline capability for areas with poor connectivity
+3. Photo capture with annotation
+4. GPS location tagging
+5. Integration with their existing CRM (Salesforce)
+
+Timeline: MVP by April 30, 2026
+Budget: $25,000 - $35,000
+
+Priority: Medium (Tier 2 client, 2 business day response time)
+
+Next Steps:
+- Schedule discovery call
+- Prepare project estimate
+- Draft statement of work (SOW)

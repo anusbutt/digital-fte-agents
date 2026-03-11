@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "email-mcp": {
+      "command": "npx",
+      "args": ["tsx", "email-mcp/index.ts"],
+      "env": {
+        "GOOGLE_CREDENTIALS_PATH": "./credentials.json",
+        "EMAIL_MCP_TOKEN_PATH": "./token-mcp.json"
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+RECEIPT
+
+Vendor: CloudHost Pro
+Date: February 14, 2026
+Transaction ID: TXN-98234-2026
+
+Item: Monthly hosting subscription (Business Plan)
+Period: February 2026
+Amount: $49.99
+
+Payment Method: **** 4242
+Status: Paid
+
+Category: Infrastructure / Hosting
+Recurring: Yes (monthly)
+Next billing: March 14, 2026
