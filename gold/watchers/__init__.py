@@ -1,0 +1,1 @@
+# Gold tier watchers package

@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+.env
+
+# Node / TypeScript
+node_modules/
+dist/
+*.js.map
+
+# Playwright session data (contains auth cookies — never commit)
+playwright-data/
+
+# Google OAuth tokens (sensitive — never commit)
+credentials.json
+token.json
+token-mcp.json
+
+# Odoo Docker volumes (managed by docker-compose)
+# These are named volumes, not local dirs — listed for clarity
+# odoo-data/, odoo-config/, postgres-data/ are Docker-managed
+
+# IDE and OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Vault runtime state (keep gitkeep placeholders, skip actual content)
+vault/Inbox/*
+vault/Needs_Action/*
+vault/Plans/*
+vault/Pending_Approval/*
+vault/Approved/*
+vault/Rejected/*
+vault/Done/*
+vault/Logs/*
+vault/Briefings/*
+vault/Accounting/*
+!vault/Inbox/.gitkeep
+!vault/Needs_Action/.gitkeep
+!vault/Plans/.gitkeep
+!vault/Pending_Approval/.gitkeep
+!vault/Approved/.gitkeep
+!vault/Rejected/.gitkeep
+!vault/Done/.gitkeep
+!vault/Logs/.gitkeep
+!vault/Briefings/.gitkeep
+!vault/Accounting/.gitkeep
+
+# Keep handbook and goals (these are config, not runtime state)
+!vault/Company_Handbook.md
+!vault/Business_Goals.md
+!vault/Dashboard.md
