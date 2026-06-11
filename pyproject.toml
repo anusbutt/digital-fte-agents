@@ -1,0 +1,14 @@
+[project]
+name = "nestaro-pilot"
+version = "0.3.0"
+description = "Nestaro Pilot Tier AI employee - Autonomous Nestaro Pilot with Gmail, WhatsApp, Facebook, Instagram, Twitter, LinkedIn, Odoo MCP, Ralph Wiggum loop, and comprehensive error recovery"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "python-dotenv>=1.2.1",
+    "watchdog>=6.0.0",
+    "google-api-python-client>=2.166.0",
+    "google-auth-oauthlib>=1.2.1",
+    "google-auth-httplib2>=0.2.0",
+    "playwright>=1.50.0",
+]

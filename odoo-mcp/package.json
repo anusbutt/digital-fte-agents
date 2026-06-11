@@ -1,0 +1,23 @@
+{
+  "name": "odoo-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for Odoo accounting operations — invoices, payments, partners (TypeScript)",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "tsx index.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "tsx": "^4.19.0",
+    "@types/node": "^22.0.0"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "private": true
+}

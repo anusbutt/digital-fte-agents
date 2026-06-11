@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "email-mcp": {
+      "command": "node",
+      "args": ["--import", "tsx/esm", "email-mcp/index.ts"],
+      "env": {
+        "GOOGLE_CREDENTIALS_PATH": "${GOOGLE_CREDENTIALS_PATH}",
+        "EMAIL_MCP_TOKEN_PATH": "${EMAIL_MCP_TOKEN_PATH}"
+      }
+    },
+    "odoo-mcp": {
+      "command": "node",
+      "args": ["--import", "tsx/esm", "odoo-mcp/index.ts"],
+      "env": {
+        "ODOO_URL": "${ODOO_URL}",
+        "ODOO_DB": "${ODOO_DB}",
+        "ODOO_API_KEY": "${ODOO_API_KEY}"
+      }
+    }
+  }
+}
