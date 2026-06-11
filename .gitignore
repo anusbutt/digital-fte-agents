@@ -55,3 +55,7 @@ vault/Accounting/*
 !vault/Company_Handbook.md
 !vault/Business_Goals.md
 !vault/Dashboard.md
+specs/
+history/
+.specify/
+vault/
