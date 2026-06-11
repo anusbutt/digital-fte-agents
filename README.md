@@ -205,12 +205,12 @@ python scripts/validate_dry_run.py  End-to-end smoke test (9 checks, DRY_RUN=tru
 
 | Task Name | Schedule | Command |
 |-----------|----------|---------|
-| `DigitalFTE-PM2Startup` | On login | `pm2 start scripts/pm2_ecosystem.config.js` |
-| `DigitalFTE-Briefing` | Mon 08:00 | `python main.py briefing` |
-| `DigitalFTE-SocialPost` | Weekdays 10:00 | `python main.py social-post` |
-| `DigitalFTE-LinkedIn` | Weekdays 09:00 | `python main.py linkedin` |
-| `DigitalFTE-PM2Health` | Every 5 min | `python main.py healthcheck` |
-| `DigitalFTE-WeeklyHealth` | Sun 07:00 | `python main.py healthcheck` |
+| `NestPilot-PM2Startup` | On login | `pm2 start scripts/pm2_ecosystem.config.js` |
+| `NestPilot-Briefing` | Mon 08:00 | `python main.py briefing` |
+| `NestPilot-SocialPost` | Weekdays 10:00 | `python main.py social-post` |
+| `NestPilot-LinkedIn` | Weekdays 09:00 | `python main.py linkedin` |
+| `NestPilot-PM2Health` | Every 5 min | `python main.py healthcheck` |
+| `NestPilot-WeeklyHealth` | Sun 07:00 | `python main.py healthcheck` |
 
 Register all tasks with:
 
