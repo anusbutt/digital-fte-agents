@@ -16,6 +16,22 @@ export async function sendEmail({
     return { success: false, error: "Email service not configured" };
   }
 
+  // Build a valid "from" address — must be either "email@domain.com" or "Name <email@domain.com>"
+  const rawFrom = process.env.RESEND_FROM_EMAIL?.trim();
+  let from: string;
+  if (rawFrom && rawFrom.includes("<") && rawFrom.includes(">")) {
+    // Already in "Name <email>" format
+    from = rawFrom;
+  } else if (rawFrom && rawFrom.includes("@")) {
+    // Plain email — wrap it
+    from = rawFrom;
+  } else {
+    // Fallback to Resend's test sender
+    from = "onboarding@resend.dev";
+  }
+
+  console.log("Resend send:", { from, to, subject, hasKey: !!apiKey });
+
   try {
     const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -23,12 +39,7 @@ export async function sendEmail({
         Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        from: process.env.RESEND_FROM_EMAIL || "Nestaro <onboarding@resend.dev>",
-        to,
-        subject,
-        html,
-      }),
+      body: JSON.stringify({ from, to, subject, html }),
     });
 
     if (!response.ok) {
