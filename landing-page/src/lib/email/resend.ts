@@ -33,8 +33,11 @@ export async function sendEmail({
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
+      const errorMessage =
+        (errorData as { message?: string }).message ||
+        `Resend API error ${response.status}`;
       console.error("Resend API error:", response.status, errorData);
-      return { success: false, error: "Failed to send email" };
+      return { success: false, error: errorMessage };
     }
 
     return { success: true };
