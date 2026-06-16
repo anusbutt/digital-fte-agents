@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail } from "lucide-react";
+import { Mail, ExternalLink } from "lucide-react";
 
 export function Footer() {
   return (
@@ -50,10 +50,55 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-secondary-light mt-8 pt-8 text-center">
+        <div className="border-t border-secondary-light mt-8 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-text-secondary text-sm">
             © {new Date().getFullYear()} Nestaro. All rights reserved.
           </p>
+
+          <div className="flex items-center gap-4 text-sm text-text-secondary">
+            {/* GitHub Repo */}
+            <a
+              href="https://github.com/anusbutt/digital-fte-agents"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 hover:text-neon transition-colors"
+              title="Open source on GitHub"
+            >
+              <ExternalLink size={14} />
+              Source
+            </a>
+
+            <span className="text-secondary-light">·</span>
+
+            {/* Developer Links */}
+            <span>Built by</span>
+            <a
+              href="https://x.com/iamanusbutt"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-neon transition-colors font-medium"
+            >
+              @iamanusbutt
+            </a>
+            <a
+              href="https://www.linkedin.com/in/anus-yousuf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-neon transition-colors"
+              title="LinkedIn"
+            >
+              in
+            </a>
+            <a
+              href="https://github.com/anusbutt"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-neon transition-colors"
+              title="GitHub"
+            >
+              gh
+            </a>
+          </div>
         </div>
       </div>
     </footer>
