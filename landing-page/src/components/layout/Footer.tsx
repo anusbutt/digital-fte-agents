@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Mail, ExternalLink } from "lucide-react";
+import { Mail } from "lucide-react";
+import { FaGithub, FaXTwitter, FaLinkedin } from "react-icons/fa6";
 
 export function Footer() {
   return (
@@ -55,8 +56,8 @@ export function Footer() {
             © {new Date().getFullYear()} Nestaro. All rights reserved.
           </p>
 
-          <div className="flex items-center gap-4 text-sm text-text-secondary">
-            {/* GitHub Repo */}
+          <div className="flex items-center gap-5 text-sm text-text-secondary">
+            {/* Open Source Repo */}
             <a
               href="https://github.com/anusbutt/digital-fte-agents"
               target="_blank"
@@ -64,40 +65,55 @@ export function Footer() {
               className="flex items-center gap-1.5 hover:text-neon transition-colors"
               title="Open source on GitHub"
             >
-              <ExternalLink size={14} />
-              Source
+              <FaGithub size={15} />
+              <span>Source</span>
             </a>
 
-            <span className="text-secondary-light">·</span>
+            <span className="text-secondary-light hidden sm:inline">|</span>
 
-            {/* Developer Links */}
-            <span>Built by</span>
-            <a
-              href="https://x.com/iamanusbutt"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-neon transition-colors font-medium"
-            >
-              @iamanusbutt
-            </a>
-            <a
-              href="https://www.linkedin.com/in/anus-yousuf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-neon transition-colors"
-              title="LinkedIn"
-            >
-              in
-            </a>
-            <a
-              href="https://github.com/anusbutt"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-neon transition-colors"
-              title="GitHub"
-            >
-              gh
-            </a>
+            {/* Developer Socials */}
+            <div className="flex items-center gap-1 text-xs text-text-secondary/70">
+              <span>by</span>
+              <a
+                href="https://x.com/iamanusbutt"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-neon transition-colors font-medium text-sm"
+                title="X / Twitter"
+              >
+                @iamanusbutt
+              </a>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <a
+                href="https://x.com/iamanusbutt"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-neon transition-colors"
+                title="X / Twitter"
+              >
+                <FaXTwitter size={14} />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/anus-yousuf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-neon transition-colors"
+                title="LinkedIn"
+              >
+                <FaLinkedin size={14} />
+              </a>
+              <a
+                href="https://github.com/anusbutt"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-neon transition-colors"
+                title="GitHub"
+              >
+                <FaGithub size={14} />
+              </a>
+            </div>
           </div>
         </div>
       </div>
