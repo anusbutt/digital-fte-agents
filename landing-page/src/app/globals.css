@@ -1,0 +1,189 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ─── Nestaro Theme Tokens (Tailwind v4 @theme) ─── */
+@theme inline {
+  /* Colors */
+  --color-background: #0a0a0f;
+  --color-foreground: #ffffff;
+  --color-neon: #00d4ff;
+  --color-neon-glow: rgba(0, 212, 255, 0.3);
+  --color-neon-strong: rgba(0, 212, 255, 0.5);
+  --color-secondary: #1a1a2e;
+  --color-secondary-light: #252540;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #a0a0b8;
+  --color-accent: #00ff88;
+
+  /* Fonts */
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+
+  /* Spacing */
+  --spacing-section: 5rem;
+  --spacing-section-lg: 7.5rem;
+
+  /* shadcn overrides for dark neon theme */
+  --color-sidebar-ring: var(--color-neon);
+  --color-sidebar-border: var(--color-secondary);
+  --color-sidebar-accent-foreground: var(--color-foreground);
+  --color-sidebar-accent: var(--color-secondary);
+  --color-sidebar-primary-foreground: var(--color-foreground);
+  --color-sidebar-primary: var(--color-neon);
+  --color-sidebar-foreground: var(--color-text-secondary);
+  --color-sidebar: var(--color-secondary);
+  --color-chart-5: var(--color-neon);
+  --color-chart-4: var(--color-neon-glow);
+  --color-chart-3: var(--color-accent);
+  --color-chart-2: var(--color-secondary-light);
+  --color-chart-1: var(--color-secondary);
+  --color-ring: var(--color-neon);
+  --color-input: var(--color-secondary);
+  --color-border: var(--color-secondary);
+  --color-destructive: #ef4444;
+  --color-accent-foreground: var(--color-background);
+  --color-muted-foreground: var(--color-text-secondary);
+  --color-muted: var(--color-secondary);
+  --color-secondary-foreground: var(--color-foreground);
+  --color-primary-foreground: var(--color-background);
+  --color-primary: var(--color-neon);
+  --color-popover-foreground: var(--color-foreground);
+  --color-popover: var(--color-secondary);
+  --color-card-foreground: var(--color-foreground);
+  --color-card: var(--color-secondary);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/* ─── Base (Dark by default) ─── */
+:root {
+  --background: #0a0a0f;
+  --foreground: #ffffff;
+  --card: #1a1a2e;
+  --card-foreground: #ffffff;
+  --popover: #1a1a2e;
+  --popover-foreground: #ffffff;
+  --primary: #00d4ff;
+  --primary-foreground: #0a0a0f;
+  --secondary: #1a1a2e;
+  --secondary-foreground: #ffffff;
+  --muted: #1a1a2e;
+  --muted-foreground: #a0a0b8;
+  --accent: #00ff88;
+  --accent-foreground: #0a0a0f;
+  --destructive: #ef4444;
+  --border: #252540;
+  --input: #252540;
+  --ring: #00d4ff;
+  --radius: 0.625rem;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    @apply border-border outline-ring/50;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* Selection */
+  ::selection {
+    background-color: var(--color-neon);
+    color: var(--color-background);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-background);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-secondary-light);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-neon);
+  }
+}
+
+/* ─── Neon Glow Utilities ─── */
+.neon-text {
+  text-shadow: 0 0 7px var(--color-neon), 0 0 10px var(--color-neon),
+    0 0 21px var(--color-neon);
+}
+
+.neon-glow {
+  box-shadow: 0 0 5px var(--color-neon), 0 0 20px var(--color-neon-glow);
+}
+
+.neon-border {
+  border: 1px solid var(--color-neon);
+  box-shadow: 0 0 5px var(--color-neon-glow), inset 0 0 5px var(--color-neon-glow);
+}
+
+/* ─── Reduced Motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Container ─── */
+.container-nestaro {
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-nestaro {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .container-nestaro {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
