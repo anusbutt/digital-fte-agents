@@ -4,6 +4,14 @@ import { sendEmail } from "@/lib/email/resend";
 
 export async function POST(request: NextRequest) {
   try {
+    if (!process.env.RESEND_API_KEY) {
+      console.error("RESEND_API_KEY missing in environment");
+      return NextResponse.json(
+        { success: false, message: "Email service not configured (missing API key)." },
+        { status: 500 }
+      );
+    }
+
     const body = await request.json();
     const result = contactSchema.safeParse(body);
 
@@ -44,7 +52,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           success: false,
-          message: "Something went wrong. Please try again or email us directly.",
+          message: emailResult.error || "Something went wrong. Please try again or email us directly.",
         },
         { status: 500 }
       );
@@ -54,11 +62,12 @@ export async function POST(request: NextRequest) {
       { success: true, message: "Message sent!" },
       { status: 200 }
     );
-  } catch {
+  } catch (err) {
+    console.error("Contact API error:", err);
     return NextResponse.json(
       {
         success: false,
-        message: "Something went wrong. Please try again or email us directly.",
+        message: err instanceof Error ? err.message : "Something went wrong. Please try again or email us directly.",
       },
       { status: 500 }
     );
